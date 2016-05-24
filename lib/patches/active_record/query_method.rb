@@ -23,15 +23,15 @@ module ActiveRecord
               return false if ActiveRecord::ConnectionAdapters::Column::FALSE_VALUES.include?(value)
               !value.blank?
             end
-          elsif number?(column)
+          elsif column_is_number(column)
             !value.zero?
           else
             !value.blank?
           end
         end
       end
-      def number?(column)
-        type == :integer || type == :float || type == :decimal
+      def column_is_number(column)
+        column.is_a? Numeric
       end
     end
   end
