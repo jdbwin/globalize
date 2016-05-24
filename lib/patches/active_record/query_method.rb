@@ -9,7 +9,7 @@ module ActiveRecord
         else
           column = self.class.columns_hash[attr_name]
           if column.nil?
-            
+
             # TODO submit a rails patch
 
             # not sure what active_record tests say but i guess this should mean:
@@ -23,12 +23,15 @@ module ActiveRecord
               return false if ActiveRecord::ConnectionAdapters::Column::FALSE_VALUES.include?(value)
               !value.blank?
             end
-          elsif column.number?
+          elsif number?(column)
             !value.zero?
           else
             !value.blank?
           end
         end
+      end
+      def number?(column)
+        type == :integer || type == :float || type == :decimal
       end
     end
   end
